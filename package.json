@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "Site for submitting simulation jobs to [DMsPredictor](https://github.com/tjheslin1/DMsPredictor)",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,12 +17,8 @@
   },
   "homepage": "https://github.com/tjheslin1/DMsPredictor-site#readme",
   "dependencies": {
-    "terser": "^3.17.0",
-    "gatsby": "^2.4.3",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  },
-  "devDependencies": {
-    "prettier": "^1.17.0"
+    "react-dom": "^16.8.6",
+    "terser": "^3.17.0"
   }
 }
