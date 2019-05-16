@@ -1,31 +1,21 @@
 {
   "name": "DMsPredictor-site",
-  "version": "1.0.0",
-  "description": "Site for submitting simulation jobs to [DMsPredictor](https://github.com/tjheslin1/DMsPredictor)",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tjheslin1/DMsPredictor-site.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tjheslin1/DMsPredictor-site/issues"
-  },
-  "homepage": "https://github.com/tjheslin1/DMsPredictor-site#readme",
-  "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "terser": "^3.17.0"
-  },
-  "devDependencies": {
-    "react-scripts": "^3.0.1"
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [

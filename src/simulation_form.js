@@ -1,13 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 
-'use strict';
-
-const e = React.createElement;
-
-
-
-class SimulationForm extends React.Component {
+export default class SimulationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +10,7 @@ class SimulationForm extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {
@@ -28,11 +23,31 @@ class SimulationForm extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+      event.preventDefault();
+
+      const simulation = {
+        name: this.state.simulationName,
+        focus: this.state.focus
+      };
+
+      alert('A simulation submitted: ' + simulation);
+
+      axios.post(`https://jsonplaceholder.typicode.com`, {simulation})
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        })
+    }
+
 // https://stackoverflow.com/questions/38510640/how-to-make-a-rest-post-call-from-reactjs-code
 
   render() {
     return (
       <form>
+        <label>Simulation name:</label>
+        <input type="text" name="simulationName" value={this.state.simulationName} />
+        <br />
         <label>
           Number of simulation runs:
           <input
@@ -43,7 +58,7 @@ class SimulationForm extends React.Component {
         </label>
         <br />
         Choose focus strategy (monsters will follow the same strategy):<br />
-        <select value={this.state.value} onChange={this.handleChange}>
+        <select value={this.state.focus} onChange={this.handleChange}>
           <option defaultValue value="lowest">Lowest health first (experienced players)</option>
           <option value="random">Random (inexperienced players)</option>
         </select>
@@ -54,5 +69,5 @@ class SimulationForm extends React.Component {
   }
 }
 
-const domContainer = document.querySelector('#simulation_form_container');
-ReactDOM.render(e(SimulationForm), domContainer);
+//const domContainer = document.querySelector('#simulation_form_container');
+//ReactDOM.render(e(SimulationForm), domContainer);

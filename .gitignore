@@ -1,17 +1,23 @@
 .idea
-node_modules
 
-# Optional npm cache directory
-.npm
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# Optional eslint cache
-.eslintcache
+# testing
+/coverage
 
-# Optional REPL history
-.node_repl_history
+# production
+/build
 
-# Output of 'npm pack'
-*.tgz
-
-# Mac files
+# misc
 .DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
