@@ -1,16 +1,17 @@
-import axios from 'axios';
 import React from 'react';
+import axios from 'axios';
+
+// https://hackernoon.com/tutorial-how-to-make-http-requests-in-react-part-3-daa6b31b66be
 
 export default class SimulationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isGoing: true,
       simulationCount: 50
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleInputChange(event) {
@@ -23,7 +24,7 @@ export default class SimulationForm extends React.Component {
     });
   }
 
-  handleSubmit(event) {
+  handleClick(event) {
       event.preventDefault();
 
       const simulation = {
@@ -33,11 +34,19 @@ export default class SimulationForm extends React.Component {
 
       alert('A simulation submitted: ' + simulation);
 
-      axios.post(`https://jsonplaceholder.typicode.com`, {simulation})
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
+      axios.post('https://jsonplaceholder.typicode.com', {
+
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: simulation
+      }).then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(error => {
+        console.log(error.config);
+      });
     }
 
 // https://stackoverflow.com/questions/38510640/how-to-make-a-rest-post-call-from-reactjs-code
@@ -63,7 +72,7 @@ export default class SimulationForm extends React.Component {
           <option value="random">Random (inexperienced players)</option>
         </select>
         <br />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" onClick={this.handleClick} />
       </form>
     );
   }
