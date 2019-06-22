@@ -7,21 +7,21 @@ export default class SimulationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        simulationName: "enter name here",
+        simulationName: "",
         simulationCount: 50,
         focus: "lowest"
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.appendPlayer = this.appendPlayer.bind(this);
+    this.appendMonster = this.appendMonster.bind(this);
   }
 
   handleChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-
-console.log("updating "+ name + " to " + value)
 
     this.setState({
       [name]: value
@@ -50,13 +50,34 @@ console.log("updating "+ name + " to " + value)
     });
   }
 
-// https://stackoverflow.com/questions/38510640/how-to-make-a-rest-post-call-from-reactjs-code
+  appendPlayer(event) {
+    this.appendCreature("newPlayer")
+  }
+
+  appendMonster(event) {
+    this.appendCreature("newMonster")
+  }
+
+  appendCreature(creatureType) {
+    const newCreatureDiv = document.getElementById(creatureType)
+
+    const currentNumCreatures = newCreatureDiv.children.length
+
+    alert("currentNumCreatures: " + currentNumCreatures)
+
+    var input = document.createElement("input");
+    input.setAttribute('type', 'text');
+    input.setAttribute('placeholder', 'enter name');
+    input.setAttribute('name', creatureType + '-' + (currentNumCreatures + 1));
+
+    newCreatureDiv.append(input)
+  }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form id="simulationForm" onSubmit={this.handleSubmit}>
         <label>Simulation name:</label>
-        <input type="text" name="simulationName" value={this.state.simulationName} onChange={this.handleChange}  />
+        <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange}  />
         <br />
         <label>
           Number of simulation runs:
@@ -73,11 +94,21 @@ console.log("updating "+ name + " to " + value)
           <option value="random">Random (inexperienced players)</option>
         </select>
         <br />
+        <label>Players:</label>
+        <br />
+        <div id="newPlayer">
+            <input type="text" placeholder="enter player name" name="newPlayer-1" />
+        </div>
+        <button type="button" onClick={this.appendPlayer}>Add Player</button>
+        <br />
+        <label>Monsters:</label>
+        <div id="newMonster">
+            <input type="text" placeholder="enter player name" name="newMonster-1" />
+        </div>
+        <button type="button" onClick={this.appendMonster}>Add Player</button>
+        <br />
         <input type="submit" value="Submit" />
       </form>
     );
   }
 }
-
-//const domContainer = document.querySelector('#simulation_form_container');
-//ReactDOM.render(e(SimulationForm), domContainer);
