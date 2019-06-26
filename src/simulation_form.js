@@ -9,7 +9,7 @@ export default class SimulationForm extends React.Component {
     this.state = {
         simulationName: "",
         simulationCount: 50,
-        focus: "lowest"
+        focus: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -17,6 +17,8 @@ export default class SimulationForm extends React.Component {
     this.appendPlayer = this.appendPlayer.bind(this);
     this.appendMonster = this.appendMonster.bind(this);
   }
+
+  // https://stackoverflow.com/questions/26505064/react-js-what-is-the-best-way-to-add-a-value-to-an-array-in-state
 
   handleChange(event) {
     const target = event.target;
@@ -31,10 +33,16 @@ export default class SimulationForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    var submittedPlayers = []
+    Array.from(document.getElementById("newPlayer").children).forEach(player => submittedPlayers.push(player))
+
+    console.log("submittedPlayers: " + submittedPlayers)
+
     var simulation = {
       name: this.state.simulationName,
       simulationCount: this.state.simulationCount,
-      focus: this.state.focus
+      focus: this.state.focus,
+      players: submittedPlayers
     };
 
     axios.post('https://jsonplaceholder.typicode.com/posts', {
@@ -63,8 +71,6 @@ export default class SimulationForm extends React.Component {
 
     const currentNumCreatures = newCreatureDiv.children.length
 
-    alert("currentNumCreatures: " + currentNumCreatures)
-
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'enter name');
@@ -89,7 +95,7 @@ export default class SimulationForm extends React.Component {
         </label>
         <br />
         Choose focus strategy (monsters will follow the same strategy):<br />
-        <select value={this.state.focus} onChange={this.handleChange}>
+        <select name="focus" value={this.state.focus} onChange={this.handleChange}>
           <option defaultValue value="lowest">Lowest health first (experienced players)</option>
           <option value="random">Random (inexperienced players)</option>
         </select>
@@ -105,7 +111,7 @@ export default class SimulationForm extends React.Component {
         <div id="newMonster">
             <input type="text" placeholder="enter player name" name="newMonster-1" />
         </div>
-        <button type="button" onClick={this.appendMonster}>Add Player</button>
+        <button type="button" onClick={this.appendMonster}>Add Monster</button>
         <br />
         <input type="submit" value="Submit" />
       </form>
