@@ -18,8 +18,6 @@ export default class SimulationForm extends React.Component {
     this.appendMonster = this.appendMonster.bind(this);
   }
 
-  // https://stackoverflow.com/questions/26505064/react-js-what-is-the-best-way-to-add-a-value-to-an-array-in-state
-
   handleChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -33,10 +31,9 @@ export default class SimulationForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    var submittedPlayers = []
-    Array.from(document.getElementById("newPlayer").children).forEach(player => submittedPlayers.push(player))
+//    https://stackoverflow.com/questions/9382167/serializing-object-that-contains-cyclic-object-value
 
-    console.log("submittedPlayers: " + submittedPlayers)
+    var submittedPlayers = Array.from(document.getElementById("newPlayer").children)
 
     var simulation = {
       name: this.state.simulationName,
