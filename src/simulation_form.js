@@ -7,7 +7,7 @@ export default class SimulationForm extends React.Component {
     this.state = {
         simulationName: "",
         simulationCount: 50,
-        focus: ""
+        focus: "lowest"
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,7 +55,8 @@ export default class SimulationForm extends React.Component {
         class: playerOptions[playerClass].value,
         level: playerOptions[level].value,
         weapon: playerOptions[weapon].value,
-        stats: stats
+        stats: stats,
+        skills: "0,0"
       };
     })
 
@@ -105,7 +106,7 @@ export default class SimulationForm extends React.Component {
 
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
-    input.setAttribute('placeholder', 'enter name');
+    input.setAttribute('placeholder', 'enter player name');
     input.setAttribute('name', 'players-' + creatureIndex + '-name');
 
     newCreatureDiv.append(input)
@@ -175,13 +176,13 @@ export default class SimulationForm extends React.Component {
 
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
-    input.setAttribute('placeholder', 'enter name');
+    input.setAttribute('placeholder', 'enter monster name');
     input.setAttribute('name', 'monsters-' + creatureIndex + '-name');
 
     newCreatureDiv.append(input)
 
     var select = document.createElement("select");
-    select.setAttribute('name', 'monsters-' + creatureIndex + "-playerClass");
+    select.setAttribute('name', 'monsters-' + creatureIndex + "-monsterType");
 
     monsterTypes.split(',').forEach(function(monster) {
       var option = document.createElement( 'option' );
@@ -240,12 +241,12 @@ export default class SimulationForm extends React.Component {
               <option value= "greatsword">Greatsword</option>
               <option value= "greataxe">Greataxe</option>
             </select>
-            <input type="text" class="mod-score" placeholder="Str" name="players-1-str" />
-            <input type="text" class="mod-score" placeholder="Dex" name="players-1-dex" />
-            <input type="text" class="mod-score" placeholder="Con" name="players-1-con" />
-            <input type="text" class="mod-score" placeholder="Int" name="players-1-int" />
-            <input type="text" class="mod-score" placeholder="Wis" name="players-1-wis" />
-            <input type="text" class="mod-score" placeholder="Cha" name="players-1-cha" />
+            <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
+            <input type="text" className="mod-score" placeholder="Dex" name="players-1-dex" />
+            <input type="text" className="mod-score" placeholder="Con" name="players-1-con" />
+            <input type="text" className="mod-score" placeholder="Int" name="players-1-int" />
+            <input type="text" className="mod-score" placeholder="Wis" name="players-1-wis" />
+            <input type="text" className="mod-score" placeholder="Cha" name="players-1-cha" />
           </div>
         </div>
         <button type="button" onClick={this.appendPlayer}>Add Player</button>
@@ -253,7 +254,7 @@ export default class SimulationForm extends React.Component {
         <label>Monsters:</label>
         <div id="monsters">
           <div id="monsters-1">
-            <input type="text" placeholder="enter player name" name="monsters-1-name" />
+            <input type="text" placeholder="enter monster name" name="monsters-1-name" />
             <select name="monsters-1-monsterType">
               <option defaultValue value="goblin">Goblin</option>
               <option value= "zombie">Zombie</option>
