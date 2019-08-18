@@ -80,7 +80,7 @@ export default class SimulationForm extends React.Component {
       monsters: submittedMonsters
     };
 
-    axios.post('https://jsonplaceholder.typicode.com/posts', {
+    axios.post('https://${gateway-id}.execute-api.eu-west-2.amazonaws.com/prod/simulator', {
       headers: {
           'Content-Type': 'application/json;charset=UTF-8',
           "Access-Control-Allow-Origin": "*",
