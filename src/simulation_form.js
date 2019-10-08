@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 export default class SimulationForm extends React.Component {
   constructor(props) {
@@ -80,17 +79,33 @@ export default class SimulationForm extends React.Component {
       monsters: submittedMonsters
     };
 
-    axios.post('https://${gateway-id}.execute-api.eu-west-2.amazonaws.com/prod/simulator', {
-      headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          "Access-Control-Allow-Origin": "*",
-      },
-      body: simulation
-    }).then(res => {
-      console.log(res.data);
-    }).catch(error => {
-      console.log(error.message);
-    });
+    // https://github.com/kndt84/aws-api-gateway-client
+    var apigClientFactory = require('aws-api-gateway-client').default;
+
+    let config = {
+      invokeUrl:'https://pjtzmbmatk.execute-api.eu-west-2.amazonaws.com',
+      region: 'eu-west-2'
+    }
+    var apigClient = apigClientFactory.newClient(config);
+
+    var pathParams = {};
+    // Template syntax follows url-template https://www.npmjs.com/package/url-template
+    var pathTemplate = '/prod/simulator'
+    var method = 'POST';
+    var additionalParams = {
+      //If there are query parameters or headers that need to be sent with the request you can add them here
+      headers: {},
+      queryParams: {}
+    };
+
+    var body = simulation
+
+    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
+      .then(function(result){
+        console.log(result.data);
+      }).catch( function(error){
+        console.log(error.message);
+      });
   }
 
   appendPlayer(event) {
