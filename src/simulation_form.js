@@ -6,7 +6,7 @@ export default class SimulationForm extends React.Component {
     this.state = {
         simulationName: "",
         simulationCount: 50,
-        focus: "lowest"
+        focus: "LowestFirst"
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,12 +33,14 @@ export default class SimulationForm extends React.Component {
       const playerClass = 1
       const level = 2
       const weapon = 3
-      const str = 4
-      const dex = 5
-      const con = 6
-      const int = 7
-      const wis = 8
-      const cha = 9
+      const armour = 4
+      const offHand = 5
+      const str = 6
+      const dex = 7
+      const con = 8
+      const int = 9
+      const wis = 10
+      const cha = 11
 
       var playerOptions = playerDiv.children
 
@@ -54,6 +56,8 @@ export default class SimulationForm extends React.Component {
         class: playerOptions[playerClass].value,
         level: playerOptions[level].value,
         weapon: playerOptions[weapon].value,
+        armour: playerOptions[armour].value,
+        offHand: playerOptions[offHand].value,
         stats: stats,
         skills: "0,0"
       };
@@ -89,11 +93,9 @@ export default class SimulationForm extends React.Component {
     var apigClient = apigClientFactory.newClient(config);
 
     var pathParams = {};
-    // Template syntax follows url-template https://www.npmjs.com/package/url-template
     var pathTemplate = '/prod/simulator'
     var method = 'POST';
     var additionalParams = {
-      //If there are query parameters or headers that need to be sent with the request you can add them here
       headers: {},
       queryParams: {}
     };
@@ -112,6 +114,8 @@ export default class SimulationForm extends React.Component {
     var playerClasses = "barbarian,cleric,fighter,rogue,wizard"
     var levels = "1,2,3,4,5"
     var weapons = "shortsword,greatsword,greataxe"
+    var armours = "noarmour,chainshirt"
+    var offHands = "none,shield,shortsword"
 
     const creatures = document.getElementById("players")
     const currentNumCreatures = creatures.children.length
@@ -150,15 +154,37 @@ export default class SimulationForm extends React.Component {
     weaponSelect.setAttribute('name', 'players-' + creatureIndex + "-weapon");
     weapons.split(',').forEach(function(weapon) {
       var option = document.createElement('option');
-      option.setAttribute('value', weapon)
-      option.innerHTML = weapon.charAt(0).toUpperCase() + weapon.substring(1)
+      option.setAttribute('value', weapon);
+      option.innerHTML = weapon.charAt(0).toUpperCase() + weapon.substring(1);
 
       weaponSelect.append(option)
+    })
+
+    var armourSelect = document.createElement("select");
+    armourSelect.setAttribute('name', 'players-' + creatureIndex + "-armour");
+    armours.split(',').forEach(function(armour) {
+      var option = document.createElement('option');
+      option.setAttribute('value', armour);
+      option.innerHTML = armour.charAt(0).toUpperCase() + armour.substring(1);
+
+      armourSelect.append(option)
+    })
+
+    var offHandSelect = document.createElement("select");
+    offHandSelect.setAttribute('name', 'players-' + creatureIndex + "-offHand");
+    offHands.split(',').forEach(function(offHand) {
+      var option = document.createElement('option');
+      option.setAttribute('value', offHand);
+      option.innerHTML = offHand.charAt(0).toUpperCase() + offHand.substring(1);
+
+      offHandSelect.append(option)
     })
 
     newCreatureDiv.append(playerClassSelect)
     newCreatureDiv.append(levelSelect)
     newCreatureDiv.append(weaponSelect)
+    newCreatureDiv.append(armourSelect)
+    newCreatureDiv.append(offHandSelect)
 
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Str"))
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Dex"))
@@ -228,8 +254,8 @@ export default class SimulationForm extends React.Component {
         <br />
         Choose focus strategy (monsters will follow the same strategy):<br />
         <select name="focus" value={this.state.focus} onChange={this.handleChange}>
-          <option defaultValue value="lowest">Lowest health first (experienced players)</option>
-          <option value="random">Random (inexperienced players)</option>
+          <option defaultValue value="LowestFirst">Lowest health first (experienced players)</option>
+          <option value="RandomFocus">Random (inexperienced players)</option>
         </select>
         <br />
         <label>Players:</label>
@@ -255,6 +281,15 @@ export default class SimulationForm extends React.Component {
               <option defaultValue value="shortsword">Shortsword</option>
               <option value= "greatsword">Greatsword</option>
               <option value= "greataxe">Greataxe</option>
+            </select>
+            <select name="players-1-armour">
+              <option defaultValue value="noarmour">NoArmour</option>
+              <option value= "chainshirt">ChainShirt</option>
+            </select>
+            <select name="players-1-offHand">
+              <option defaultValue value="none">No Off Hand</option>
+              <option value="shield">Shield</option>
+              <option value= "shortsword">Shortsword</option>
             </select>
             <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
             <input type="text" className="mod-score" placeholder="Dex" name="players-1-dex" />
