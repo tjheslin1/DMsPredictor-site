@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "aws-api-gateway-client": "^0.2.17",
+    "aws-sdk": "^2.590.0",
     "axios": "^0.18.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.3.0",
     "serialize-javascript": "^2.1.1",
     "set-value": "^2.0.1"
   },
