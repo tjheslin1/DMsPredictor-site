@@ -12,6 +12,19 @@ code {
     monospace;
 }
 
+.centered {
+  position: fixed;
+  left: 50%;
+  margin-left: -293px;
+}
+
+.padded {
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
 .mod-score {
     width: 30px;
 }

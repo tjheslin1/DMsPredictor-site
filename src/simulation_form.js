@@ -90,6 +90,7 @@ export default class SimulationForm extends React.Component {
       invokeUrl:'https://pjtzmbmatk.execute-api.eu-west-2.amazonaws.com',
       region: 'eu-west-2'
     }
+
     var apigClient = apigClientFactory.newClient(config);
 
     var pathParams = {};
@@ -122,6 +123,8 @@ export default class SimulationForm extends React.Component {
     const creatureIndex = currentNumCreatures + 1
 
     var newCreatureDiv = document.createElement("div")
+    newCreatureDiv.setAttribute('id', 'players-' + creatureIndex)
+    newCreatureDiv.setAttribute('class', 'padded')
 
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
@@ -186,6 +189,8 @@ export default class SimulationForm extends React.Component {
     newCreatureDiv.append(armourSelect)
     newCreatureDiv.append(offHandSelect)
 
+    newCreatureDiv.append(document.createElement("br"))
+
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Str"))
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Dex"))
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Con"))
@@ -239,7 +244,7 @@ export default class SimulationForm extends React.Component {
 
   render() {
     return (
-      <form id="simulationForm" onSubmit={this.handleSubmit}>
+      <form id="simulationForm" class="centered" onSubmit={this.handleSubmit}>
         <label>Simulation name:</label>
         <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange}  />
         <br />
@@ -261,7 +266,7 @@ export default class SimulationForm extends React.Component {
         <label>Players:</label>
         <br />
         <div id="players">
-          <div id="players-1">
+          <div id="players-1" class="padded">
             <input type="text" placeholder="enter player name" name="players-1-name" />
             <select name="players-1-playerClass">
               <option defaultValue value="barbarian">Barbarian</option>
@@ -291,6 +296,7 @@ export default class SimulationForm extends React.Component {
               <option value="shield">Shield</option>
               <option value= "shortsword">Shortsword</option>
             </select>
+            <br />
             <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
             <input type="text" className="mod-score" placeholder="Dex" name="players-1-dex" />
             <input type="text" className="mod-score" placeholder="Con" name="players-1-con" />
