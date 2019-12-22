@@ -8,7 +8,6 @@ import * as serviceWorker from './serviceWorker';
 
 var submitted = true
 
-//ReactDOM.render(<App />, document.getElementById('root'));
 if (submitted) {
   ReactDOM.render(<SimulationResults />, document.getElementById('root'));
 } else {

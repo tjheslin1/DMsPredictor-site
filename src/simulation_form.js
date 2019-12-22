@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default class SimulationForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {

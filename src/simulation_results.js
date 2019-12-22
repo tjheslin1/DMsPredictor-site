@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SimulationForm extends React.Component {
+export default class SimulationResults extends React.Component {
 
   constructor(props) {
     super(props);
@@ -23,25 +23,35 @@ export default class SimulationForm extends React.Component {
   }
 
   queryDatabase(event) {
-    var AWS = require("aws-sdk");
+    event.preventDefault();
 
-    AWS.config.update({
-      region: "us-west-2",
-      endpoint: ""
-    });
+    // https://github.com/kndt84/aws-api-gateway-client
+    var apigClientFactory = require('aws-api-gateway-client').default;
 
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    let config = {
+      invokeUrl:'https://pjtzmbmatk.execute-api.eu-west-2.amazonaws.com',
+      region: 'eu-west-2'
+    }
 
-    var params = {
-      ExpressionAttributeValues: {
-        ':s': {S: this.state.simHash}
-      },
-      KeyConditionExpression: 'sum_hash = :s',
-      ProjectionExpression: 'result',
-      FilterExpression: '',
-      TableName: 'simulation_results',
-      Limit: 1
+    var apigClient = apigClientFactory.newClient(config);
+
+    var pathParams = {
+      simhashValue: this.state.simHash
     };
+
+    var pathTemplate = '/prod/query/{simhashValue}'
+    var method = 'GET';
+    var additionalParams = {
+      headers: {},
+      queryParams: {}
+    };
+
+    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
+      .then(function(result){
+        console.log(result.data);
+      }).catch( function(error){
+        console.log(error.message);
+      });
   }
 
   render() {
