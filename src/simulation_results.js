@@ -29,7 +29,7 @@ export default class SimulationResults extends React.Component {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
     let config = {
-      invokeUrl:'https://pjtzmbmatk.execute-api.eu-west-2.amazonaws.com',
+      invokeUrl:'https://4zoom92ov5.execute-api.eu-west-2.amazonaws.com',
       region: 'eu-west-2'
     }
 

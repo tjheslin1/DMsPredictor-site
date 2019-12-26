@@ -5,15 +5,17 @@ export default class SimulationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        simulationName: "",
-        simulationCount: 50,
-        focus: "LowestFirst"
+      simulationName: "",
+      simulationCount: 50,
+      focus: "LowestFirst",
+      simHash: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.appendPlayer = this.appendPlayer.bind(this);
     this.appendMonster = this.appendMonster.bind(this);
+    this.queryDatabase = this.queryDatabase.bind(this);
   }
 
   handleChange(event) {
@@ -36,12 +38,13 @@ export default class SimulationForm extends React.Component {
       const weapon = 3
       const armour = 4
       const offHand = 5
-      const str = 6
-      const dex = 7
-      const con = 8
-      const int = 9
-      const wis = 10
-      const cha = 11
+
+      const str = 7
+      const dex = 8
+      const con = 9
+      const int = 10
+      const wis = 11
+      const cha = 12
 
       var playerOptions = playerDiv.children
 
@@ -88,7 +91,7 @@ export default class SimulationForm extends React.Component {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
     let config = {
-      invokeUrl:'https://pjtzmbmatk.execute-api.eu-west-2.amazonaws.com',
+      invokeUrl:'https://4zoom92ov5.execute-api.eu-west-2.amazonaws.com',
       region: 'eu-west-2'
     }
 
@@ -110,6 +113,13 @@ export default class SimulationForm extends React.Component {
       }).catch( function(error){
         console.log(error.message);
       });
+
+    return(
+      <form id="simulationResults" class="centered" onSubmit={this.queryDatabase}>
+        <input type="text" placeholder="enter simHash" name="simHash" value={this.state.simHash} onChange={this.handleChange}  />
+        <input type="submit" value="Submit" />
+      </form>
+    );
   }
 
   appendPlayer(event) {
@@ -243,8 +253,40 @@ export default class SimulationForm extends React.Component {
     creatures.append(newCreatureDiv)
   }
 
+  queryDatabase(event) {
+    event.preventDefault();
+
+    // https://github.com/kndt84/aws-api-gateway-client
+    var apigClientFactory = require('aws-api-gateway-client').default;
+
+    let config = {
+      invokeUrl:'https://4zoom92ov5.execute-api.eu-west-2.amazonaws.com',
+      region: 'eu-west-2'
+    }
+
+    var apigClient = apigClientFactory.newClient(config);
+
+    var pathParams = {
+      simhashValue: this.state.simHash
+    };
+
+    var pathTemplate = '/prod/query/{simhashValue}'
+    var method = 'GET';
+    var additionalParams = {
+      headers: {},
+      queryParams: {}
+    };
+
+    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
+      .then(function(result){
+        console.log(result.data);
+      }).catch( function(error){
+        console.log(error.message);
+      });
+  }
+
   render() {
-    return (
+    return(
       <form id="simulationForm" class="centered" onSubmit={this.handleSubmit}>
         <label>Simulation name:</label>
         <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange}  />
