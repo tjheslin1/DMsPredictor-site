@@ -131,6 +131,7 @@ export default class SimulationForm extends React.Component {
     apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
       .then(function(result){
         console.log(result.data);
+        window.location.href = '/results/' + result.data.body
       }).catch( function(error){
         console.log(error.message);
       });
@@ -286,89 +287,93 @@ export default class SimulationForm extends React.Component {
 
   render() {
     return(
-      <form id="simulationForm" className="centered" onSubmit={this.handleSubmit}>
-        <label>Simulation name:</label>
-        <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange} />
-        <br />
-        <label>
-          Number of simulation runs:
-          <input
-            name="simulationCount"
-            type="number"
-            value={this.state.simulationCount}
-            onChange={this.handleChange} />
-        </label>
-        <br />
-        Choose focus strategy (monsters will follow the same strategy):<br />
-        <select name="focus" value={this.state.focus} onChange={this.handleChange}>
-          <option defaultValue value="LowestFirst">Lowest health first (experienced players)</option>
-          <option value="RandomFocus">Random (inexperienced players)</option>
-        </select>
-        <br />
-        <label>Players:</label>
-        <br />
-        <div id="players">
-          <div id="players-1" className="padded">
-            <input type="text" placeholder="enter player name" name="players-1-name" />
-            <select name="playerClass_1" onChange={this.handlePlayerClassChange}>
-              <option defaultValue value="barbarian">Barbarian</option>
-              <option value= "cleric">Cleric</option>
-              <option value= "fighter">Fighter</option>
-              <option value= "rogue">Rogue</option>
-              <option value= "wizard">Wizard</option>
-            </select>
-            <select id="players-1-fightingstyles" name="players-1-fightingstyles" style={{display: "none"}}>
-              <option defaultValue value= "archery">Archery</option>
-              <option value= "defense">Defense</option>
-            </select>
-            <select name="players-1-level">
-              <option defaultValue value="1">Level 1</option>
-              <option value= "2">Level 2</option>
-              <option value= "3">Level 3</option>
-              <option value= "4">Level 4</option>
-              <option value= "5">Level 5</option>
-            </select>
-            <select name="players-1-weapon">
-              <option defaultValue value="shortsword">Shortsword</option>
-              <option value= "greatsword">Greatsword</option>
-              <option value= "greataxe">Greataxe</option>
-            </select>
-            <select name="players-1-armour">
-              <option defaultValue value="noarmour">NoArmour</option>
-              <option value= "chainshirt">ChainShirt</option>
-            </select>
-            <select name="players-1-offHand">
-              <option defaultValue value="none">No Off Hand</option>
-              <option value="shield">Shield</option>
-              <option value= "shortsword">Shortsword</option>
-            </select>
-            <br />
-            <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
-            <input type="text" className="mod-score" placeholder="Dex" name="players-1-dex" />
-            <input type="text" className="mod-score" placeholder="Con" name="players-1-con" />
-            <input type="text" className="mod-score" placeholder="Int" name="players-1-int" />
-            <input type="text" className="mod-score" placeholder="Wis" name="players-1-wis" />
-            <input type="text" className="mod-score" placeholder="Cha" name="players-1-cha" />
+      <div>
+        <a href="/results">Simulation results</a>
+
+        <form id="simulationForm" className="centered" onSubmit={this.handleSubmit}>
+          <label>Simulation name:</label>
+          <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange} />
+          <br />
+          <label>
+            Number of simulation runs:
+            <input
+              name="simulationCount"
+              type="number"
+              value={this.state.simulationCount}
+              onChange={this.handleChange} />
+          </label>
+          <br />
+          Choose focus strategy (monsters will follow the same strategy):<br />
+          <select name="focus" value={this.state.focus} onChange={this.handleChange}>
+            <option defaultValue value="LowestFirst">Lowest health first (experienced players)</option>
+            <option value="RandomFocus">Random (inexperienced players)</option>
+          </select>
+          <br />
+          <label>Players:</label>
+          <br />
+          <div id="players">
+            <div id="players-1" className="padded">
+              <input type="text" placeholder="enter player name" name="players-1-name" />
+              <select name="playerClass_1" onChange={this.handlePlayerClassChange}>
+                <option defaultValue value="barbarian">Barbarian</option>
+                <option value= "cleric">Cleric</option>
+                <option value= "fighter">Fighter</option>
+                <option value= "rogue">Rogue</option>
+                <option value= "wizard">Wizard</option>
+              </select>
+              <select id="players-1-fightingstyles" name="players-1-fightingstyles" style={{display: "none"}}>
+                <option defaultValue value= "archery">Archery</option>
+                <option value= "defense">Defense</option>
+              </select>
+              <select name="players-1-level">
+                <option defaultValue value="1">Level 1</option>
+                <option value= "2">Level 2</option>
+                <option value= "3">Level 3</option>
+                <option value= "4">Level 4</option>
+                <option value= "5">Level 5</option>
+              </select>
+              <select name="players-1-weapon">
+                <option defaultValue value="shortsword">Shortsword</option>
+                <option value= "greatsword">Greatsword</option>
+                <option value= "greataxe">Greataxe</option>
+              </select>
+              <select name="players-1-armour">
+                <option defaultValue value="noarmour">NoArmour</option>
+                <option value= "chainshirt">ChainShirt</option>
+              </select>
+              <select name="players-1-offHand">
+                <option defaultValue value="none">No Off Hand</option>
+                <option value="shield">Shield</option>
+                <option value= "shortsword">Shortsword</option>
+              </select>
+              <br />
+              <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
+              <input type="text" className="mod-score" placeholder="Dex" name="players-1-dex" />
+              <input type="text" className="mod-score" placeholder="Con" name="players-1-con" />
+              <input type="text" className="mod-score" placeholder="Int" name="players-1-int" />
+              <input type="text" className="mod-score" placeholder="Wis" name="players-1-wis" />
+              <input type="text" className="mod-score" placeholder="Cha" name="players-1-cha" />
+            </div>
           </div>
-        </div>
-        <button type="button" onClick={this.appendPlayer}>Add Player</button>
-        <br />
-        <label>Monsters:</label>
-        <div id="monsters">
-          <div id="monsters-1">
-            <input type="text" placeholder="enter monster name" name="monsters-1-name" />
-            <select name="monsters-1-monsterType">
-              <option defaultValue value="goblin">Goblin</option>
-              <option value= "zombie">Zombie</option>
-              <option value= "vampire">Vampire</option>
-              <option value= "werewolf">Werewolf</option>
-            </select>
+          <button type="button" onClick={this.appendPlayer}>Add Player</button>
+          <br />
+          <label>Monsters:</label>
+          <div id="monsters">
+            <div id="monsters-1">
+              <input type="text" placeholder="enter monster name" name="monsters-1-name" />
+              <select name="monsters-1-monsterType">
+                <option defaultValue value="goblin">Goblin</option>
+                <option value= "zombie">Zombie</option>
+                <option value= "vampire">Vampire</option>
+                <option value= "werewolf">Werewolf</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <button type="button" onClick={this.appendMonster}>Add Monster</button>
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
+          <button type="button" onClick={this.appendMonster}>Add Monster</button>
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
 }

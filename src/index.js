@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import SimulationForm from './simulation_form'
-//import SimulationResults from './simulation_results'
 import * as serviceWorker from './serviceWorker';
 
 import {
@@ -22,7 +21,7 @@ export default function Index() {
           <Route exact path="/">
             <SimulationForm />
           </Route>
-          <Route path="/results/:id">
+          <Route path="/results/:id?">
             <Results />
           </Route>
         </Switch>
@@ -31,7 +30,9 @@ export default function Index() {
   );
 }
 
-//100408825
+// 100408825
+// 1251203534
+// 1418698956
 
 function Results() {
   let { id } = useParams();
@@ -45,12 +46,13 @@ function Results() {
         <input id="simHash" type="text" placeholder="enter simHash" />
         <input type="submit" value="Submit" />
       </form>
+      <a href='{"/results/" + id}'><i>refresh</i></a>
     </div>
+
   )
 }
 
 function queryDatabase(simHash) {
-
   // https://github.com/kndt84/aws-api-gateway-client
   var apigClientFactory = require('aws-api-gateway-client').default;
 
@@ -74,11 +76,11 @@ function queryDatabase(simHash) {
 
   apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
     .then(function(result){
-      console.log("AAAHH - " + JSON.stringify(result.data));
       document.getElementById("results-header").innerHTML = "ID: " + JSON.stringify(result.data.Items[0].sim_hash.S).replace(/"/g, "") + " = "
-          + JSON.stringify(result.data.Items[0].result.S).replace(/"/g, "").replace(/,/g, " and")
+          + JSON.stringify(result.data.Items[0].result.S).replace(/"/g, "").replace(/,/g, " and");
     }).catch( function(error){
-      console.log(error.message);
+      document.getElementById("results-header").innerHTML = error.message
+      + '<br /><i style="color: red">this is likely an unknown simulation ID</i>';
     });
 }
 
