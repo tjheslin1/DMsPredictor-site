@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useParams } from "react-router-dom";
+
 export default class SimulationResults extends React.Component {
 
   constructor(props) {
@@ -55,9 +57,16 @@ export default class SimulationResults extends React.Component {
   }
 
   render() {
-    return <form id="simulationResults" className="centered" onSubmit={this.queryDatabase}>
-      <input type="text" placeholder="enter simHash" name="simHash" value={this.state.simHash} onChange={this.handleChange}  />
-      <input type="submit" value="Submit" />
-    </form>
+    let { id } = useParams();
+
+    return (
+    <div>
+      <h3>ID: {id}</h3>
+      <form id="simulationResults" className="centered" onSubmit={this.queryDatabase}>
+        <input type="text" placeholder="enter simHash" name="simHash" value={this.state.simHash} onChange={this.handleChange}  />
+        <input type="submit" value="Submit" />
+      </form>
+      </div>
+      )
   }
 }

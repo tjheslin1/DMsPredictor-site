@@ -5,20 +5,81 @@ import SimulationForm from './simulation_form'
 //import SimulationResults from './simulation_results'
 import * as serviceWorker from './serviceWorker';
 
-//ReactDOM.render(<SimulationResults />, document.getElementById('root'));
-ReactDOM.render(<SimulationForm />, document.getElementById('root'));
-//ReactDOM.render(<Display submitted={false} />, document.getElementById('root'))
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams
+} from "react-router-dom";
 
-//function Display(props) {
-//  const submitted = props.submitted;
-//  if (submitted) {
-//    return <SimulationResults />;
-//  } else {
-//    return <SimulationForm />;
-//  }
-//}
+ReactDOM.render(<Index />, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+export default function Index() {
+  return (
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path="/">
+            <SimulationForm />
+          </Route>
+          <Route path="/results/:id">
+            <Results />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+//100408825
+
+function Results() {
+  let { id } = useParams();
+
+  queryDatabase(id);
+
+  return (
+    <div className="centered" >
+      <h3 id="results-header">waiting...</h3>
+      <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
+        <input id="simHash" type="text" placeholder="enter simHash" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  )
+}
+
+function queryDatabase(simHash) {
+
+  // https://github.com/kndt84/aws-api-gateway-client
+  var apigClientFactory = require('aws-api-gateway-client').default;
+
+  let config = {
+    invokeUrl:'https://4zoom92ov5.execute-api.eu-west-2.amazonaws.com',
+    region: 'eu-west-2'
+  }
+
+  var apigClient = apigClientFactory.newClient(config);
+
+  var pathParams = {
+    simhashValue: simHash
+  };
+
+  var pathTemplate = '/prod/query/{simhashValue}'
+  var method = 'GET';
+  var additionalParams = {
+    headers: {},
+    queryParams: {}
+  };
+
+  apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
+    .then(function(result){
+      console.log("AAAHH - " + JSON.stringify(result.data));
+      document.getElementById("results-header").innerHTML = "ID: " + JSON.stringify(result.data.Items[0].sim_hash.S).replace(/"/g, "") + " = "
+          + JSON.stringify(result.data.Items[0].result.S).replace(/"/g, "").replace(/,/g, " and")
+    }).catch( function(error){
+      console.log(error.message);
+    });
+}
+
 serviceWorker.unregister();
