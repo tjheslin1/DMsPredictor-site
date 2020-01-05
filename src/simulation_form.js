@@ -7,15 +7,14 @@ export default class SimulationForm extends React.Component {
     this.state = {
       simulationName: "",
       simulationCount: 50,
-      focus: "LowestFirst",
-      simHash: ""
+      focus: "LowestFirst"
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.appendPlayer = this.appendPlayer.bind(this);
-    this.appendMonster = this.appendMonster.bind(this);
-    this.queryDatabase = this.queryDatabase.bind(this);
+    this.handleChange             = this.handleChange.bind(this);
+    this.handlePlayerClassChange  = this.handlePlayerClassChange.bind(this);
+    this.handleSubmit             = this.handleSubmit.bind(this);
+    this.appendPlayer             = this.appendPlayer.bind(this);
+    this.appendMonster            = this.appendMonster.bind(this);
   }
 
   handleChange(event) {
@@ -28,23 +27,37 @@ export default class SimulationForm extends React.Component {
     });
   }
 
+  handlePlayerClassChange(event) {
+    this.handleChange(event)
+
+    const target = event.target;
+    const index = target.name.charAt(target.name.length - 1)
+
+    if (target.value === "fighter") {
+      document.getElementById("players-" + index + "-fightingstyles").style.display = "inline";
+    } else {
+      document.getElementById("players-" + index + "-fightingstyles").style.display = "none";
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
     var submittedPlayers = Array.from(document.getElementById("players").children).map(playerDiv => {
       const name = 0
       const playerClass = 1
-      const level = 2
-      const weapon = 3
-      const armour = 4
-      const offHand = 5
+      const fightingStyle = 2
+      const level = 3
+      const weapon = 4
+      const armour = 5
+      const offHand = 6
 
-      const str = 7
-      const dex = 8
-      const con = 9
-      const int = 10
-      const wis = 11
-      const cha = 12
+      const str = 8
+      const dex = 9
+      const con = 10
+      const int = 11
+      const wis = 12
+      const cha = 13
 
       var playerOptions = playerDiv.children
 
@@ -55,7 +68,7 @@ export default class SimulationForm extends React.Component {
       playerOptions[wis].value + "," +
       playerOptions[cha].value
 
-      return {
+      var json = {
         name: playerOptions[name].value,
         class: playerOptions[playerClass].value,
         level: playerOptions[level].value,
@@ -65,6 +78,12 @@ export default class SimulationForm extends React.Component {
         stats: stats,
         skills: "0,0"
       };
+
+      if (playerOptions[playerClass].value === "fighter") {
+        json.fightingStyle = playerOptions[fightingStyle].value
+      }
+
+      return json;
     })
 
     var submittedMonsters = Array.from(document.getElementById("monsters").children).map(monsterDiv => {
@@ -107,19 +126,14 @@ export default class SimulationForm extends React.Component {
 
     var body = simulation
 
+//    console.log("simulation = " + JSON.stringify(simulation))
+
     apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
       .then(function(result){
         console.log(result.data);
       }).catch( function(error){
         console.log(error.message);
       });
-
-    return(
-      <form id="simulationResults" class="centered" onSubmit={this.queryDatabase}>
-        <input type="text" placeholder="enter simHash" name="simHash" value={this.state.simHash} onChange={this.handleChange}  />
-        <input type="submit" value="Submit" />
-      </form>
-    );
   }
 
   appendPlayer(event) {
@@ -128,10 +142,13 @@ export default class SimulationForm extends React.Component {
     var weapons = "shortsword,greatsword,greataxe"
     var armours = "noarmour,chainshirt"
     var offHands = "none,shield,shortsword"
+    var fightingStyles = "archery,defense"
 
     const creatures = document.getElementById("players")
     const currentNumCreatures = creatures.children.length
     const creatureIndex = currentNumCreatures + 1
+
+    this.setState({[`playerClass_${creatureIndex}`]: "barbarian"})
 
     var newCreatureDiv = document.createElement("div")
     newCreatureDiv.setAttribute('id', 'players-' + creatureIndex)
@@ -145,13 +162,26 @@ export default class SimulationForm extends React.Component {
     newCreatureDiv.append(input)
 
     var playerClassSelect = document.createElement("select");
-    playerClassSelect.setAttribute('name', 'players-' + creatureIndex + "-playerClass");
+    playerClassSelect.setAttribute('name', 'playerClass_' + creatureIndex);
+    playerClassSelect.onchange = (e) => this.handlePlayerClassChange(e);
     playerClasses.split(',').forEach(function(playerClass) {
       var option = document.createElement('option');
       option.setAttribute('value', playerClass)
       option.innerHTML = playerClass.charAt(0).toUpperCase() + playerClass.substring(1)
 
       playerClassSelect.append(option)
+    })
+
+    var fightingStylesSelect = document.createElement("select");
+    fightingStylesSelect.setAttribute('id', 'players-' + creatureIndex + "-fightingstyles");
+    fightingStylesSelect.setAttribute('name', 'players-' + creatureIndex + "-fightingstyles");
+    fightingStylesSelect.setAttribute('style', 'display: none;');
+    fightingStyles.split(',').forEach(function(fightingStyle) {
+      var option = document.createElement('option');
+      option.setAttribute('value', fightingStyle)
+      option.innerHTML = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
+
+      fightingStylesSelect.append(option)
     })
 
     var levelSelect = document.createElement("select");
@@ -195,6 +225,7 @@ export default class SimulationForm extends React.Component {
     })
 
     newCreatureDiv.append(playerClassSelect)
+    newCreatureDiv.append(fightingStylesSelect)
     newCreatureDiv.append(levelSelect)
     newCreatureDiv.append(weaponSelect)
     newCreatureDiv.append(armourSelect)
@@ -253,43 +284,11 @@ export default class SimulationForm extends React.Component {
     creatures.append(newCreatureDiv)
   }
 
-  queryDatabase(event) {
-    event.preventDefault();
-
-    // https://github.com/kndt84/aws-api-gateway-client
-    var apigClientFactory = require('aws-api-gateway-client').default;
-
-    let config = {
-      invokeUrl:'https://4zoom92ov5.execute-api.eu-west-2.amazonaws.com',
-      region: 'eu-west-2'
-    }
-
-    var apigClient = apigClientFactory.newClient(config);
-
-    var pathParams = {
-      simhashValue: this.state.simHash
-    };
-
-    var pathTemplate = '/prod/query/{simhashValue}'
-    var method = 'GET';
-    var additionalParams = {
-      headers: {},
-      queryParams: {}
-    };
-
-    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
-      .then(function(result){
-        console.log(result.data);
-      }).catch( function(error){
-        console.log(error.message);
-      });
-  }
-
   render() {
     return(
-      <form id="simulationForm" class="centered" onSubmit={this.handleSubmit}>
+      <form id="simulationForm" className="centered" onSubmit={this.handleSubmit}>
         <label>Simulation name:</label>
-        <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange}  />
+        <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange} />
         <br />
         <label>
           Number of simulation runs:
@@ -309,14 +308,18 @@ export default class SimulationForm extends React.Component {
         <label>Players:</label>
         <br />
         <div id="players">
-          <div id="players-1" class="padded">
+          <div id="players-1" className="padded">
             <input type="text" placeholder="enter player name" name="players-1-name" />
-            <select name="players-1-playerClass">
+            <select name="playerClass_1" onChange={this.handlePlayerClassChange}>
               <option defaultValue value="barbarian">Barbarian</option>
               <option value= "cleric">Cleric</option>
               <option value= "fighter">Fighter</option>
               <option value= "rogue">Rogue</option>
               <option value= "wizard">Wizard</option>
+            </select>
+            <select id="players-1-fightingstyles" name="players-1-fightingstyles" style={{display: "none"}}>
+              <option defaultValue value= "archery">Archery</option>
+              <option value= "defense">Defense</option>
             </select>
             <select name="players-1-level">
               <option defaultValue value="1">Level 1</option>

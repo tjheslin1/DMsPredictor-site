@@ -55,7 +55,7 @@ export default class SimulationResults extends React.Component {
   }
 
   render() {
-    return <form id="simulationResults" class="centered" onSubmit={this.queryDatabase}>
+    return <form id="simulationResults" className="centered" onSubmit={this.queryDatabase}>
       <input type="text" placeholder="enter simHash" name="simHash" value={this.state.simHash} onChange={this.handleChange}  />
       <input type="submit" value="Submit" />
     </form>
