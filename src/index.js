@@ -5,7 +5,7 @@ import SimulationForm from './simulation_form'
 import * as serviceWorker from './serviceWorker';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   useParams
