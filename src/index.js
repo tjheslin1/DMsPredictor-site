@@ -67,7 +67,7 @@ function Results() {
 }
 
 function passQueryToUrl(simHash) {
-  window.location.href = '/results/' + simHash
+  window.location.href = '/#/results/' + simHash
 }
 
 function queryDatabase(simHash) {

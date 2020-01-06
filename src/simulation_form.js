@@ -131,7 +131,7 @@ export default class SimulationForm extends React.Component {
     apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
       .then(function(result){
         console.log(result.data);
-        window.location.href = '/results/' + result.data.body
+        window.location.href = '/#/results/' + result.data.body
       }).catch( function(error){
         console.log(error.message);
       });
