@@ -39,17 +39,48 @@ function Results() {
 
   queryDatabase(id);
 
-  return (
-    <div className="centered" >
-      <h3 id="results-header">waiting...</h3>
-      <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
-        <input id="simHash" type="text" placeholder="enter simHash" />
-        <input type="submit" value="Submit" />
-      </form>
-      <a href='{"/results/" + id}'><i>refresh</i></a>
-    </div>
+  var simHash = document.getElementById("simHash")
 
-  )
+//  console.log("simHash - " + simHash)
+//  console.log("id - " + id)
+
+  if (simHash !== null && simHash !== "" && simHash !== undefined) {
+//    console.log("ONE")
+    return (
+      <div className="centered" >
+        <h3 id="results-header">waiting...</h3>
+        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
+          <input id="simHash" type="text" placeholder="enter simHash" />
+          <input type="submit" value="Submit" />
+        </form>
+        <a href={`/results/${simHash}`}><i>refresh {simHash}</i></a>
+      </div>
+    )
+  } else if (id !== null && id !== "" && id !== undefined) {
+//    console.log("TWO")
+    return (
+      <div className="centered" >
+        <h3 id="results-header">waiting...</h3>
+        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
+          <input id="simHash" type="text" placeholder="enter simHash" />
+          <input type="submit" value="Submit" />
+        </form>
+        <a href={`/results/${id}`}><i>refresh {id}</i></a>
+      </div>
+    )
+  } else {
+//    console.log("THREE")
+    return (
+      <div className="centered" >
+        <h3 id="results-header">waiting...</h3>
+        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
+          <input id="simHash" type="text" placeholder="enter simHash" />
+          <input type="submit" value="Submit" />
+        </form>
+        <a href='/results'>Refresh</a>
+      </div>
+    )
+  }
 }
 
 function queryDatabase(simHash) {
