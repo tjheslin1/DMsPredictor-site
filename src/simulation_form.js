@@ -288,8 +288,9 @@ export default class SimulationForm extends React.Component {
   render() {
     return(
       <div>
-        <a href="/results">Simulation results</a>
-
+        <a className="centered" href="/results">Click here to query simulation results</a>
+        <br />
+        <br />
         <form id="simulationForm" className="centered" onSubmit={this.handleSubmit}>
           <label>Simulation name:</label>
           <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange} />

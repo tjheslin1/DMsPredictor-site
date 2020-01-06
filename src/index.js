@@ -37,43 +37,26 @@ export default function Index() {
 function Results() {
   let { id } = useParams();
 
-  queryDatabase(id);
+  if (id !== null && id !== "" && id !== undefined) {
+    queryDatabase(id);
 
-  var simHash = document.getElementById("simHash")
-
-//  console.log("simHash - " + simHash)
-//  console.log("id - " + id)
-
-  if (simHash !== null && simHash !== "" && simHash !== undefined) {
-//    console.log("ONE")
-    return (
-      <div className="centered" >
-        <h3 id="results-header">waiting...</h3>
-        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
-          <input id="simHash" type="text" placeholder="enter simHash" />
-          <input type="submit" value="Submit" />
-        </form>
-        <a href={`/results/${simHash}`}><i>refresh {simHash}</i></a>
-      </div>
-    )
-  } else if (id !== null && id !== "" && id !== undefined) {
 //    console.log("TWO")
     return (
       <div className="centered" >
         <h3 id="results-header">waiting...</h3>
-        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
+        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
           <input id="simHash" type="text" placeholder="enter simHash" />
           <input type="submit" value="Submit" />
         </form>
-        <a href={`/results/${id}`}><i>refresh {id}</i></a>
+        <a href={`/results/${id}`}><i>refresh {id} results</i></a>
       </div>
     )
   } else {
 //    console.log("THREE")
     return (
       <div className="centered" >
-        <h3 id="results-header">waiting...</h3>
-        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); queryDatabase(document.getElementById("simHash").value);}}>
+        <h3 id="results-header">Enter your simulation id:</h3>
+        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
           <input id="simHash" type="text" placeholder="enter simHash" />
           <input type="submit" value="Submit" />
         </form>
@@ -81,6 +64,10 @@ function Results() {
       </div>
     )
   }
+}
+
+function passQueryToUrl(simHash) {
+  window.location.href = '/results/' + simHash
 }
 
 function queryDatabase(simHash) {
@@ -107,7 +94,7 @@ function queryDatabase(simHash) {
 
   apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
     .then(function(result){
-      document.getElementById("results-header").innerHTML = "ID: " + JSON.stringify(result.data.Items[0].sim_hash.S).replace(/"/g, "") + " = "
+      document.getElementById("results-header").innerHTML = "Your simulation id is: <div style=\"color: green\">" + JSON.stringify(result.data.Items[0].sim_hash.S).replace(/"/g, "") + "</div><br/><i>make a note of it (or copy the full URL) to return to the results in the future.</i><br /><br/>Results: "
           + JSON.stringify(result.data.Items[0].result.S).replace(/"/g, "").replace(/,/g, " and");
     }).catch( function(error){
       document.getElementById("results-header").innerHTML = error.message
