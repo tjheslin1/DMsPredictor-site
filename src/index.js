@@ -48,7 +48,7 @@ function Results() {
           <input id="simHash" type="text" placeholder="enter simHash" />
           <input type="submit" value="Submit" />
         </form>
-        <a href={`/results/${id}`}><i>refresh {id} results</i></a>
+        <a href={`/#/results/${id}`}><i>refresh {id} results</i></a>
       </div>
     )
   } else {
@@ -60,7 +60,7 @@ function Results() {
           <input id="simHash" type="text" placeholder="enter simHash" />
           <input type="submit" value="Submit" />
         </form>
-        <a href='/results'>Refresh</a>
+        <a href='/#/results'>Refresh</a>
       </div>
     )
   }

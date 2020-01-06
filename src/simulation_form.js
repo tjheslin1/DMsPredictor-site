@@ -288,7 +288,7 @@ export default class SimulationForm extends React.Component {
   render() {
     return(
       <div>
-        <a className="centered" href="/results">Click here to query simulation results</a>
+        <a className="centered" href="/#/results">Click here to query simulation results</a>
         <br />
         <br />
         <form id="simulationForm" className="centered" onSubmit={this.handleSubmit}>
