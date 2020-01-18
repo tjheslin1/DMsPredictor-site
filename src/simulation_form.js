@@ -147,9 +147,11 @@ export default class SimulationForm extends React.Component {
 
     const creatures = document.getElementById("players")
     const currentNumCreatures = creatures.children.length
-    const creatureIndex = currentNumCreatures + 1
+    var creatureIndex = currentNumCreatures + 1
 
-    this.setState({[`playerClass_${creatureIndex}`]: "barbarian"})
+    while (document.getElementById("players-" + creatureIndex)) {
+      creatureIndex++
+    }
 
     var newCreatureDiv = document.createElement("div")
     newCreatureDiv.setAttribute('id', 'players-' + creatureIndex)
@@ -225,6 +227,12 @@ export default class SimulationForm extends React.Component {
       offHandSelect.append(option)
     })
 
+    var removeButton = document.createElement("input");
+    removeButton.setAttribute('type', "button");
+    removeButton.setAttribute('style', "background-color: white; color: black; border: 2px solid #fd837b");
+    removeButton.onclick = (e) => this.removeCreature(creatureIndex, "players-");
+    removeButton.value = "X"
+
     newCreatureDiv.append(playerClassSelect)
     newCreatureDiv.append(fightingStylesSelect)
     newCreatureDiv.append(levelSelect)
@@ -240,6 +248,8 @@ export default class SimulationForm extends React.Component {
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Int"))
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Wis"))
     newCreatureDiv.append(this.appendModScore(creatureIndex, "Cha"))
+
+    newCreatureDiv.append(removeButton)
 
     creatures.append(newCreatureDiv)
   }
@@ -259,9 +269,15 @@ export default class SimulationForm extends React.Component {
 
     const creatures = document.getElementById("monsters")
     const currentNumCreatures = creatures.children.length
-    const creatureIndex = currentNumCreatures + 1
+    var creatureIndex = currentNumCreatures + 1
+
+    while (document.getElementById("monsters-" + creatureIndex)) {
+      creatureIndex++
+    }
 
     var newCreatureDiv = document.createElement("div")
+    newCreatureDiv.setAttribute('id', 'monsters-' + creatureIndex)
+    newCreatureDiv.setAttribute('class', 'padded')
 
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
@@ -281,17 +297,30 @@ export default class SimulationForm extends React.Component {
       select.append(option)
     })
 
+    var removeButton = document.createElement("input");
+    removeButton.setAttribute('type', "button");
+    removeButton.setAttribute('style', "background-color: white; color: black; border: 2px solid #fd837b");
+    removeButton.onclick = (e) => this.removeCreature(creatureIndex, "monsters-");
+    removeButton.value = "X"
+
     newCreatureDiv.append(select)
+    newCreatureDiv.append(removeButton)
+
     creatures.append(newCreatureDiv)
+  }
+
+  removeCreature(creatureIndex, prefix) {
+    document.getElementById(prefix + creatureIndex).remove()
   }
 
   render() {
     return(
-      <div>
-        <a className="centered" href="/#/results">Click here to query simulation results</a>
+      <div className="centered">
+        <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
+        <a href="/#/results">Click here to query simulation results</a>
         <br />
         <br />
-        <form id="simulationForm" className="centered" onSubmit={this.handleSubmit}>
+        <form id="simulationForm" onSubmit={this.handleSubmit}>
           <label>Simulation name:</label>
           <input type="text" placeholder="enter name here" name="simulationName" value={this.state.simulationName} onChange={this.handleChange} />
           <br />
@@ -360,7 +389,7 @@ export default class SimulationForm extends React.Component {
           <br />
           <label>Monsters:</label>
           <div id="monsters">
-            <div id="monsters-1">
+            <div id="monsters-1" className="padded">
               <input type="text" placeholder="enter monster name" name="monsters-1-name" />
               <select name="monsters-1-monsterType">
                 <option defaultValue value="goblin">Goblin</option>

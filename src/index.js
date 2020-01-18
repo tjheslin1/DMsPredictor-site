@@ -30,9 +30,7 @@ export default function Index() {
   );
 }
 
-// 100408825
-// 1251203534
-// 1418698956
+// 208297758
 
 function Results() {
   let { id } = useParams();
@@ -40,9 +38,9 @@ function Results() {
   if (id !== null && id !== "" && id !== undefined) {
     queryDatabase(id);
 
-//    console.log("TWO")
     return (
       <div className="centered" >
+        <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
         <h3 id="results-header">waiting...</h3>
         <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
           <input id="simHash" type="text" placeholder="enter simHash" />
@@ -52,9 +50,9 @@ function Results() {
       </div>
     )
   } else {
-//    console.log("THREE")
     return (
       <div className="centered" >
+        <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
         <h3 id="results-header">Enter your simulation id:</h3>
         <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
           <input id="simHash" type="text" placeholder="enter simHash" />
