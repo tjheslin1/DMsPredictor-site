@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: none;
 }
 
 code {
@@ -13,9 +14,8 @@ code {
 }
 
 .centered {
-  position: fixed;
-  left: 50%;
-  margin-left: -293px;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .padded {
@@ -27,4 +27,20 @@ code {
 
 .mod-score {
     width: 30px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.mobile_message {
+
+}
+
+@media screen and (max-width: 800px) {
+  .mobile_message {
+    font-size: 10px;
+  }
 }

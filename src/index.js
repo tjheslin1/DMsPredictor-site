@@ -40,7 +40,7 @@ function Results() {
 
     return (
       <div className="centered" >
-        <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
+        <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
         <h3 id="results-header">waiting...</h3>
         <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
           <input id="simHash" type="text" placeholder="enter simHash" />
@@ -52,7 +52,7 @@ function Results() {
   } else {
     return (
       <div className="centered" >
-        <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
+        <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
         <h3 id="results-header">Enter your simulation id:</h3>
         <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
           <input id="simHash" type="text" placeholder="enter simHash" />

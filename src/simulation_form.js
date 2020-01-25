@@ -162,6 +162,7 @@ export default class SimulationForm extends React.Component {
     input.setAttribute('placeholder', 'enter player name');
     input.setAttribute('name', 'players-' + creatureIndex + '-name');
 
+    newCreatureDiv.append(document.createElement("hr"))
     newCreatureDiv.append(input)
 
     var playerClassSelect = document.createElement("select");
@@ -284,6 +285,7 @@ export default class SimulationForm extends React.Component {
     input.setAttribute('placeholder', 'enter monster name');
     input.setAttribute('name', 'monsters-' + creatureIndex + '-name');
 
+    newCreatureDiv.append(document.createElement("hr"))
     newCreatureDiv.append(input)
 
     var select = document.createElement("select");
@@ -316,7 +318,7 @@ export default class SimulationForm extends React.Component {
   render() {
     return(
       <div className="centered">
-        <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
+        <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
         <a href="/#/results">Click here to query simulation results</a>
         <br />
         <br />
@@ -335,8 +337,8 @@ export default class SimulationForm extends React.Component {
           <br />
           Choose focus strategy (monsters will follow the same strategy):<br />
           <select name="focus" value={this.state.focus} onChange={this.handleChange}>
-            <option defaultValue value="LowestFirst">Lowest health first (experienced players)</option>
-            <option value="RandomFocus">Random (inexperienced players)</option>
+            <option defaultValue value="LowestFirst">Lowest health first *</option>
+            <option value="RandomFocus">Random **</option>
           </select>
           <br />
           <label>Players:</label>
@@ -403,6 +405,9 @@ export default class SimulationForm extends React.Component {
           <br />
           <input type="submit" value="Submit" />
         </form>
+        <br />
+        <p>* for experienced players</p>
+        <p>** for inexperienced players</p>
       </div>
     );
   }
