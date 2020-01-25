@@ -43,7 +43,9 @@ export default class SimulationForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    var submittedPlayers = Array.from(document.getElementById("players").children).map(playerDiv => {
+    var submittedPlayers = Array.from(document.getElementById("players").children)
+    .filter(element => element.nodeName === "DIV")
+    .map(playerDiv => {
       const name = 0
       const playerClass = 1
       const fightingStyle = 2
@@ -86,7 +88,9 @@ export default class SimulationForm extends React.Component {
       return json;
     })
 
-    var submittedMonsters = Array.from(document.getElementById("monsters").children).map(monsterDiv => {
+    var submittedMonsters = Array.from(document.getElementById("monsters").children)
+    .filter(element => element.nodeName === "DIV")
+    .map(monsterDiv => {
       const name = 0
       const monsterType = 1
 
@@ -155,14 +159,12 @@ export default class SimulationForm extends React.Component {
 
     var newCreatureDiv = document.createElement("div")
     newCreatureDiv.setAttribute('id', 'players-' + creatureIndex)
-    newCreatureDiv.setAttribute('class', 'padded')
 
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'enter player name');
     input.setAttribute('name', 'players-' + creatureIndex + '-name');
 
-    newCreatureDiv.append(document.createElement("hr"))
     newCreatureDiv.append(input)
 
     var playerClassSelect = document.createElement("select");
@@ -252,6 +254,7 @@ export default class SimulationForm extends React.Component {
 
     newCreatureDiv.append(removeButton)
 
+    creatures.append(document.createElement("hr"))
     creatures.append(newCreatureDiv)
   }
 
@@ -278,14 +281,12 @@ export default class SimulationForm extends React.Component {
 
     var newCreatureDiv = document.createElement("div")
     newCreatureDiv.setAttribute('id', 'monsters-' + creatureIndex)
-    newCreatureDiv.setAttribute('class', 'padded')
 
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'enter monster name');
     input.setAttribute('name', 'monsters-' + creatureIndex + '-name');
 
-    newCreatureDiv.append(document.createElement("hr"))
     newCreatureDiv.append(input)
 
     var select = document.createElement("select");
@@ -308,6 +309,7 @@ export default class SimulationForm extends React.Component {
     newCreatureDiv.append(select)
     newCreatureDiv.append(removeButton)
 
+    creatures.append(document.createElement("hr"))
     creatures.append(newCreatureDiv)
   }
 
@@ -344,7 +346,7 @@ export default class SimulationForm extends React.Component {
           <label>Players:</label>
           <br />
           <div id="players">
-            <div id="players-1" className="padded">
+            <div id="players-1">
               <input type="text" placeholder="enter player name" name="players-1-name" />
               <select name="playerClass_1" onChange={this.handlePlayerClassChange}>
                 <option defaultValue value="barbarian">Barbarian</option>
@@ -387,11 +389,11 @@ export default class SimulationForm extends React.Component {
               <input type="text" className="mod-score" placeholder="Cha" name="players-1-cha" />
             </div>
           </div>
-          <button type="button" onClick={this.appendPlayer}>Add Player</button>
+          <div className="padded"><button type="button" onClick={this.appendPlayer}>Add Player</button></div>
           <br />
-          <label>Monsters:</label>
+          <label className="padded">Monsters:</label>
           <div id="monsters">
-            <div id="monsters-1" className="padded">
+            <div id="monsters-1">
               <input type="text" placeholder="enter monster name" name="monsters-1-name" />
               <select name="monsters-1-monsterType">
                 <option defaultValue value="goblin">Goblin</option>
@@ -401,13 +403,13 @@ export default class SimulationForm extends React.Component {
               </select>
             </div>
           </div>
-          <button type="button" onClick={this.appendMonster}>Add Monster</button>
+          <div className="padded"><button type="button" onClick={this.appendMonster}>Add Monster</button></div>
           <br />
           <input type="submit" value="Submit" />
         </form>
         <br />
-        <p>* for experienced players</p>
-        <p>** for inexperienced players</p>
+        <p>* to represent experienced players</p>
+        <p>** to represent inexperienced players</p>
       </div>
     );
   }
