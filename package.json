@@ -1,6 +1,6 @@
 {
   "name": "DMsPredictor-site",
-  "homepage": "https://www.dmspredictor.com",
+  "homepage": "www.dmspredictor.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
