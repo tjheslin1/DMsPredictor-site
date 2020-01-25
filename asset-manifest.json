@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "www.dmspredictor.com/static/css/main.2110b72f.chunk.css",
+    "main.css": "www.dmspredictor.com/static/css/main.a68b07f1.chunk.css",
     "main.js": "www.dmspredictor.com/static/js/main.8a861b07.chunk.js",
     "main.js.map": "www.dmspredictor.com/static/js/main.8a861b07.chunk.js.map",
     "runtime-main.js": "www.dmspredictor.com/static/js/runtime-main.e8b7778f.js",
@@ -8,15 +8,15 @@
     "static/js/2.9d2f50ea.chunk.js": "www.dmspredictor.com/static/js/2.9d2f50ea.chunk.js",
     "static/js/2.9d2f50ea.chunk.js.map": "www.dmspredictor.com/static/js/2.9d2f50ea.chunk.js.map",
     "index.html": "www.dmspredictor.com/index.html",
-    "precache-manifest.7cc9f202cfd37af6b7c1667af66e353c.js": "www.dmspredictor.com/precache-manifest.7cc9f202cfd37af6b7c1667af66e353c.js",
+    "precache-manifest.b9119db5d7149b92ef97abc70e1bc35b.js": "www.dmspredictor.com/precache-manifest.b9119db5d7149b92ef97abc70e1bc35b.js",
     "service-worker.js": "www.dmspredictor.com/service-worker.js",
-    "static/css/main.2110b72f.chunk.css.map": "www.dmspredictor.com/static/css/main.2110b72f.chunk.css.map",
+    "static/css/main.a68b07f1.chunk.css.map": "www.dmspredictor.com/static/css/main.a68b07f1.chunk.css.map",
     "static/js/2.9d2f50ea.chunk.js.LICENSE": "www.dmspredictor.com/static/js/2.9d2f50ea.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.e8b7778f.js",
     "static/js/2.9d2f50ea.chunk.js",
-    "static/css/main.2110b72f.chunk.css",
+    "static/css/main.a68b07f1.chunk.css",
     "static/js/main.8a861b07.chunk.js"
   ]
 }
