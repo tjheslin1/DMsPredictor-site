@@ -39,26 +39,33 @@ function Results() {
     queryDatabase(id);
 
     return (
-      <div className="centered" >
-        <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
-        <h3 id="results-header">waiting...</h3>
-        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
-          <input id="simHash" type="text" placeholder="enter simHash" />
-          <input type="submit" value="Submit" />
-        </form>
-        <a href={`/#/results/${id}`}><i>refresh {id} results</i></a>
+      <div>
+        <div className="centered" >
+          <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
+          <h3 id="results-header">waiting...</h3>
+          <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
+            <input id="simHash" type="text" placeholder="enter simHash" />
+            <input type="submit" value="Submit" />
+          </form>
+          <a href={`/#/results/${id}`}><i>refresh {id} results</i></a>
+        </div>
+        <img className="gif" src="https://i.giphy.com/media/10qKGDzg9kDcXu/source.gif" alt="rolling dice..."/>
       </div>
     )
   } else {
     return (
-      <div className="centered" >
-        <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
-        <h3 id="results-header">Enter your simulation id:</h3>
-        <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
-          <input id="simHash" type="text" placeholder="enter simHash" />
-          <input type="submit" value="Submit" />
-        </form>
-        <a href='/#/results'>Refresh</a>
+      <div>
+        <div className="centered" >
+          <h3 className="mobile_message"><a target="_blank" rel="noopener noreferrer" href="https://github.com/tjheslin1/DMsPredictor">This project</a> <i>is a work in progress! If you have any feedback, suggestions or questions please <a href="mailto:tjheslin1@kolabnow.com?subject=DMsPredictor-site">email me</a>, referencing a <u>simulation results ID</u> where relevant.</i></h3>
+          <h3 id="results-header">Enter your simulation id:</h3>
+          <form id="simulationResults" onSubmit={(e) => {e.preventDefault(); passQueryToUrl(document.getElementById("simHash").value)}}>
+            <input id="simHash" type="text" placeholder="enter simHash" />
+            <input type="submit" value="Submit" />
+          </form>
+          <a href='/#/results'>Refresh</a>
+          <br />
+        </div>
+        <img className="gif" src="https://i.giphy.com/media/10qKGDzg9kDcXu/source.gif" alt="rolling dice..." />
       </div>
     )
   }

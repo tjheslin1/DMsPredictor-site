@@ -17,6 +17,14 @@ code {
   margin: 0 auto;
 }
 
+.gif {
+  padding-top: 10px;
+  width: 20%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .padded {
   padding-top: 10px;
   padding-right: 0px;
@@ -41,5 +49,13 @@ hr {
 @media screen and (max-width: 800px) {
   .mobile_message {
     font-size: 10px;
+  }
+
+  .gif {
+    padding-top: 5px;
+    width: 75%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
