@@ -49,7 +49,7 @@ function Results() {
           </form>
           <a href={`/#/results/${id}`}><i>refresh {id} results</i></a>
         </div>
-        <img className="gif" src="https://i.giphy.com/media/10qKGDzg9kDcXu/source.gif" alt="rolling dice..."/>
+        <img className="gif" src="https://dmspredictor-site-assets.s3.eu-west-2.amazonaws.com/roll_small.gif" alt="rolling dice..."/>
       </div>
     )
   } else {
@@ -65,7 +65,7 @@ function Results() {
           <a href='/#/results'>Refresh</a>
           <br />
         </div>
-        <img className="gif" src="https://i.giphy.com/media/10qKGDzg9kDcXu/source.gif" alt="rolling dice..." />
+        <img className="gif" src="https://dmspredictor-site-assets.s3.eu-west-2.amazonaws.com/roll_small.gif" alt="rolling dice..." />
       </div>
     )
   }
