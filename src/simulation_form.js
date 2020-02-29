@@ -225,7 +225,13 @@ export default class SimulationForm extends React.Component {
     offHands.split(',').forEach(function(offHand) {
       var option = document.createElement('option');
       option.setAttribute('value', offHand);
-      option.innerHTML = offHand.charAt(0).toUpperCase() + offHand.substring(1);
+
+      if (offHand === "none") {
+        option.innerHTML = "No Off Hand";
+      }
+      else {
+        option.innerHTML = offHand.charAt(0).toUpperCase() + offHand.substring(1);
+      }
 
       offHandSelect.append(option)
     })
