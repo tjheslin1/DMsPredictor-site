@@ -34,9 +34,15 @@ export default class SimulationForm extends React.Component {
     const index = target.name.charAt(target.name.length - 1)
 
     if (target.value === "fighter") {
-      document.getElementById("players-" + index + "-fightingstyles").style.display = "inline";
+      document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "inline";
+      document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "none";
+    }
+    else if (target.value === "ranger") {
+    document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "none";
+      document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "inline";
     } else {
-      document.getElementById("players-" + index + "-fightingstyles").style.display = "none";
+      document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "none";
+      document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "none";
     }
   }
 
@@ -48,18 +54,19 @@ export default class SimulationForm extends React.Component {
     .map(playerDiv => {
       const name = 0
       const playerClass = 1
-      const fightingStyle = 2
-      const level = 3
-      const weapon = 4
-      const armour = 5
-      const offHand = 6
+      const fighterFightingStyle = 2
+      const rangerFightingStyle = 3
+      const level = 4
+      const weapon = 5
+      const armour = 6
+      const offHand = 7
 
-      const str = 8
-      const dex = 9
-      const con = 10
-      const int = 11
-      const wis = 12
-      const cha = 13
+      const str = 9
+      const dex = 10
+      const con = 11
+      const int = 12
+      const wis = 13
+      const cha = 14
 
       var playerOptions = playerDiv.children
 
@@ -82,7 +89,11 @@ export default class SimulationForm extends React.Component {
       };
 
       if (playerOptions[playerClass].value === "fighter") {
-        json.fightingStyle = playerOptions[fightingStyle].value
+        json.fighterFightingStyle = playerOptions[fighterFightingStyle].value
+      }
+
+      if (playerOptions[playerClass].value === "ranger") {
+        json.rangerFightingStyle = playerOptions[rangerFightingStyle].value
       }
 
       return json;
@@ -142,12 +153,13 @@ export default class SimulationForm extends React.Component {
   }
 
   appendPlayer(event) {
-    var playerClasses = "barbarian,cleric,fighter,rogue,wizard"
+    var playerClasses = "barbarian,cleric,fighter,ranger,rogue,wizard"
     var levels = "1,2,3,4,5"
-    var weapons = "shortsword,greatsword,greataxe"
+    var weapons = "shortsword,greatsword,greataxe,longsword"
     var armours = "noarmour,chainshirt"
     var offHands = "none,shield,shortsword"
-    var fightingStyles = "archery,defense"
+    var fighterFightingStyles = "archery,defense,dueling,great_weapon_fighting,protection,two_weapon_fighting"
+    var rangerFightingStyles = "archery,defense,dueling,two_weapon_fighting"
 
     const creatures = document.getElementById("players")
     const currentNumCreatures = creatures.children.length
@@ -178,16 +190,32 @@ export default class SimulationForm extends React.Component {
       playerClassSelect.append(option)
     })
 
-    var fightingStylesSelect = document.createElement("select");
-    fightingStylesSelect.setAttribute('id', 'players-' + creatureIndex + "-fightingstyles");
-    fightingStylesSelect.setAttribute('name', 'players-' + creatureIndex + "-fightingstyles");
-    fightingStylesSelect.setAttribute('style', 'display: none;');
-    fightingStyles.split(',').forEach(function(fightingStyle) {
+    var fighterFightingStylesSelect = document.createElement("select");
+    fighterFightingStylesSelect.setAttribute('id', 'players-' + creatureIndex + "-fighterfightingstyles");
+    fighterFightingStylesSelect.setAttribute('name', 'players-' + creatureIndex + "-fighterfightingstyles");
+    fighterFightingStylesSelect.setAttribute('style', 'display: none;');
+    fighterFightingStyles.split(',').forEach(function(fightingStyle) {
       var option = document.createElement('option');
       option.setAttribute('value', fightingStyle)
-      option.innerHTML = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
 
-      fightingStylesSelect.append(option)
+      var styleName = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
+      option.innerHTML = styleName.replace(/_/g, " ")
+
+      fighterFightingStylesSelect.append(option)
+    })
+
+    var rangerFightingStylesSelect = document.createElement("select");
+    rangerFightingStylesSelect.setAttribute('id', 'players-' + creatureIndex + "-rangerfightingstyles");
+    rangerFightingStylesSelect.setAttribute('name', 'players-' + creatureIndex + "-rangerfightingstyles");
+    rangerFightingStylesSelect.setAttribute('style', 'display: none;');
+    rangerFightingStyles.split(',').forEach(function(fightingStyle) {
+      var option = document.createElement('option');
+      option.setAttribute('value', fightingStyle)
+
+      var styleName = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
+      option.innerHTML = styleName.replace(/_/g, " ")
+
+      rangerFightingStylesSelect.append(option)
     })
 
     var levelSelect = document.createElement("select");
@@ -243,7 +271,8 @@ export default class SimulationForm extends React.Component {
     removeButton.value = "X"
 
     newCreatureDiv.append(playerClassSelect)
-    newCreatureDiv.append(fightingStylesSelect)
+    newCreatureDiv.append(fighterFightingStylesSelect)
+    newCreatureDiv.append(rangerFightingStylesSelect)
     newCreatureDiv.append(levelSelect)
     newCreatureDiv.append(weaponSelect)
     newCreatureDiv.append(armourSelect)
@@ -358,12 +387,23 @@ export default class SimulationForm extends React.Component {
                 <option defaultValue value="barbarian">Barbarian</option>
                 <option value= "cleric">Cleric</option>
                 <option value= "fighter">Fighter</option>
+                <option value= "ranger">Ranger</option>
                 <option value= "rogue">Rogue</option>
                 <option value= "wizard">Wizard</option>
               </select>
-              <select id="players-1-fightingstyles" name="players-1-fightingstyles" style={{display: "none"}}>
+              <select id="players-1-fighterfightingstyles" name="players-1-fighterfightingstyles" style={{display: "none"}}>
                 <option defaultValue value= "archery">Archery</option>
                 <option value= "defense">Defense</option>
+                <option value= "dueling">Dueling</option>
+                <option value= "great_weapon_fighting">Great Weapon Fighting</option>
+                <option value= "protection">Protection</option>
+                <option value= "two_weapon_fighting">Two Weapon Fighting</option>
+              </select>
+              <select id="players-1-rangerfightingstyles" name="players-1-rangerfightingstyles" style={{display: "none"}}>
+                <option defaultValue value= "archery">Archery</option>
+                <option value= "defense">Defense</option>
+                <option value= "dueling">Dueling</option>
+                <option value= "two_weapon_fighting">Two Weapon Fighting</option>
               </select>
               <select name="players-1-level">
                 <option defaultValue value="1">Level 1</option>
@@ -376,6 +416,7 @@ export default class SimulationForm extends React.Component {
                 <option defaultValue value="shortsword">Shortsword</option>
                 <option value= "greatsword">Greatsword</option>
                 <option value= "greataxe">Greataxe</option>
+                <option value= "longsword">Longsword</option>
               </select>
               <select name="players-1-armour">
                 <option defaultValue value="noarmour">NoArmour</option>
