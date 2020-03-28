@@ -155,7 +155,7 @@ export default class SimulationForm extends React.Component {
   appendPlayer(event) {
     var playerClasses = "barbarian,cleric,fighter,ranger,rogue,wizard"
     var levels = "1,2,3,4,5"
-    var weapons = "shortsword,greatsword,greataxe,longsword"
+    var weapons = "shortsword,greatsword,greataxe,longbow"
     var armours = "noarmour,chainshirt"
     var offHands = "none,shield,shortsword"
     var fighterFightingStyles = "archery,defense,dueling,great_weapon_fighting,protection,two_weapon_fighting"
@@ -416,7 +416,7 @@ export default class SimulationForm extends React.Component {
                 <option defaultValue value="shortsword">Shortsword</option>
                 <option value= "greatsword">Greatsword</option>
                 <option value= "greataxe">Greataxe</option>
-                <option value= "longsword">Longsword</option>
+                <option value= "longbow">Longbow</option>
               </select>
               <select name="players-1-armour">
                 <option defaultValue value="noarmour">NoArmour</option>
