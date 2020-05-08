@@ -304,7 +304,7 @@ export default class SimulationForm extends React.Component {
   }
 
   appendMonster(event) {
-    var monsterTypes = "goblin,zombie,vampire,werewolf"
+    var monsterTypes = "goblin,lich,werewolf,vampire,zombie"
 
     const creatures = document.getElementById("monsters")
     const currentNumCreatures = creatures.children.length
@@ -385,47 +385,47 @@ export default class SimulationForm extends React.Component {
               <input type="text" placeholder="enter player name" name="players-1-name" />
               <select name="playerClass_1" onChange={this.handlePlayerClassChange}>
                 <option defaultValue value="barbarian">Barbarian</option>
-                <option value= "cleric">Cleric</option>
-                <option value= "fighter">Fighter</option>
-                <option value= "ranger">Ranger</option>
-                <option value= "rogue">Rogue</option>
-                <option value= "wizard">Wizard</option>
+                <option value="cleric">Cleric</option>
+                <option value="fighter">Fighter</option>
+                <option value="ranger">Ranger</option>
+                <option value="rogue">Rogue</option>
+                <option value="wizard">Wizard</option>
               </select>
               <select id="players-1-fighterfightingstyles" name="players-1-fighterfightingstyles" style={{display: "none"}}>
-                <option defaultValue value= "archery">Archery</option>
-                <option value= "defense">Defense</option>
-                <option value= "dueling">Dueling</option>
-                <option value= "great_weapon_fighting">Great Weapon Fighting</option>
-                <option value= "protection">Protection</option>
-                <option value= "two_weapon_fighting">Two Weapon Fighting</option>
+                <option defaultValue value="archery">Archery</option>
+                <option value="defense">Defense</option>
+                <option value="dueling">Dueling</option>
+                <option value="great_weapon_fighting">Great Weapon Fighting</option>
+                <option value="protection">Protection</option>
+                <option value="two_weapon_fighting">Two Weapon Fighting</option>
               </select>
               <select id="players-1-rangerfightingstyles" name="players-1-rangerfightingstyles" style={{display: "none"}}>
-                <option defaultValue value= "archery">Archery</option>
-                <option value= "defense">Defense</option>
-                <option value= "dueling">Dueling</option>
-                <option value= "two_weapon_fighting">Two Weapon Fighting</option>
+                <option defaultValue value="archery">Archery</option>
+                <option value="defense">Defense</option>
+                <option value="dueling">Dueling</option>
+                <option value="two_weapon_fighting">Two Weapon Fighting</option>
               </select>
               <select name="players-1-level">
                 <option defaultValue value="1">Level 1</option>
-                <option value= "2">Level 2</option>
-                <option value= "3">Level 3</option>
-                <option value= "4">Level 4</option>
-                <option value= "5">Level 5</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+                <option value="4">Level 4</option>
+                <option value="5">Level 5</option>
               </select>
               <select name="players-1-weapon">
                 <option defaultValue value="shortsword">Shortsword</option>
-                <option value= "greatsword">Greatsword</option>
-                <option value= "greataxe">Greataxe</option>
-                <option value= "longbow">Longbow</option>
+                <option value="greatsword">Greatsword</option>
+                <option value="greataxe">Greataxe</option>
+                <option value="longbow">Longbow</option>
               </select>
               <select name="players-1-armour">
                 <option defaultValue value="noarmour">NoArmour</option>
-                <option value= "chainshirt">ChainShirt</option>
+                <option value="chainshirt">ChainShirt</option>
               </select>
               <select name="players-1-offHand">
                 <option defaultValue value="none">No Off Hand</option>
                 <option value="shield">Shield</option>
-                <option value= "shortsword">Shortsword</option>
+                <option value="shortsword">Shortsword</option>
               </select>
               <br />
               <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
@@ -444,9 +444,10 @@ export default class SimulationForm extends React.Component {
               <input type="text" placeholder="enter monster name" name="monsters-1-name" />
               <select name="monsters-1-monsterType">
                 <option defaultValue value="goblin">Goblin</option>
-                <option value= "zombie">Zombie</option>
-                <option value= "vampire">Vampire</option>
-                <option value= "werewolf">Werewolf</option>
+                <option value="lich">Lich</option>
+                <option value="werewolf">Werewolf</option>
+                <option value="vampire">Vampire</option>
+                <option value="zombie">Zombie</option>
               </select>
             </div>
           </div>
