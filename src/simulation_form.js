@@ -35,13 +35,19 @@ export default class SimulationForm extends React.Component {
 
     if (target.value === "fighter") {
       document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "inline";
+      document.getElementById("players-" + index + "-paladinfightingstyles").style.display = "none";
       document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "none";
-    }
-    else if (target.value === "ranger") {
+    } else if (target.value === "paladin") {
     document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "none";
+    document.getElementById("players-" + index + "-paladinfightingstyles").style.display = "inline";
+      document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "none";
+    } else if (target.value === "ranger") {
+    document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "none";
+    document.getElementById("players-" + index + "-paladinfightingstyles").style.display = "none";
       document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "inline";
     } else {
       document.getElementById("players-" + index + "-fighterfightingstyles").style.display = "none";
+      document.getElementById("players-" + index + "-paladinfightingstyles").style.display = "none";
       document.getElementById("players-" + index + "-rangerfightingstyles").style.display = "none";
     }
   }
@@ -55,18 +61,19 @@ export default class SimulationForm extends React.Component {
       const name = 0
       const playerClass = 1
       const fighterFightingStyle = 2
-      const rangerFightingStyle = 3
-      const level = 4
-      const weapon = 5
-      const armour = 6
-      const offHand = 7
+      const paladinFightingStyle = 3
+      const rangerFightingStyle = 4
+      const level = 5
+      const weapon = 6
+      const armour = 7
+      const offHand = 8
 
-      const str = 9
-      const dex = 10
-      const con = 11
-      const int = 12
-      const wis = 13
-      const cha = 14
+      const str = 10
+      const dex = 11
+      const con = 12
+      const int = 13
+      const wis = 14
+      const cha = 15
 
       var playerOptions = playerDiv.children
 
@@ -90,6 +97,10 @@ export default class SimulationForm extends React.Component {
 
       if (playerOptions[playerClass].value === "fighter") {
         json.fighterFightingStyle = playerOptions[fighterFightingStyle].value
+      }
+
+      if (playerOptions[playerClass].value === "paladin") {
+        json.paladinFightingStyle = playerOptions[paladinFightingStyle].value
       }
 
       if (playerOptions[playerClass].value === "ranger") {
@@ -153,13 +164,14 @@ export default class SimulationForm extends React.Component {
   }
 
   appendPlayer(event) {
-    var playerClasses = "barbarian,cleric,fighter,ranger,rogue,wizard"
+    var playerClasses = "barbarian,cleric,fighter,paladin,ranger,rogue,wizard"
     var levels = "1,2,3,4,5"
-    var weapons = "shortsword,greatsword,greataxe,longbow"
-    var armours = "noarmour,chainshirt"
-    var offHands = "none,shield,shortsword"
-    var fighterFightingStyles = "archery,defense,dueling,great_weapon_fighting,protection,two_weapon_fighting"
-    var rangerFightingStyles = "archery,defense,dueling,two_weapon_fighting"
+    var weapons = "shortsword,plus_one_shortsword,greatsword,greataxe,longbow"
+    var armours = "noarmour,chain_shirt,chain_mail"
+    var offHands = "none,shield,shortsword,plus_one_shortsword"
+    var fighterFightingStyles = "none,archery,defense,dueling,great_weapon_fighting,protection,two_weapon_fighting"
+    var paladinFightingStyles = "none,defense,dueling,great_weapon_fighting"
+    var rangerFightingStyles = "none,archery,defense,dueling,two_weapon_fighting"
 
     const creatures = document.getElementById("players")
     const currentNumCreatures = creatures.children.length
@@ -199,9 +211,23 @@ export default class SimulationForm extends React.Component {
       option.setAttribute('value', fightingStyle)
 
       var styleName = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
-      option.innerHTML = styleName.replace(/_/g, " ")
+      option.innerHTML = styleName.replace(/_/g, " ");
 
       fighterFightingStylesSelect.append(option)
+    })
+
+    var paladinFightingStylesSelect = document.createElement("select");
+    paladinFightingStylesSelect.setAttribute('id', 'players-' + creatureIndex + "-paladinfightingstyles");
+    paladinFightingStylesSelect.setAttribute('name', 'players-' + creatureIndex + "-paladinfightingstyles");
+    paladinFightingStylesSelect.setAttribute('style', 'display: none;');
+    paladinFightingStyles.split(',').forEach(function(fightingStyle) {
+      var option = document.createElement('option');
+      option.setAttribute('value', fightingStyle)
+
+      var styleName = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
+      option.innerHTML = styleName.replace(/_/g, " ");
+
+      paladinFightingStylesSelect.append(option)
     })
 
     var rangerFightingStylesSelect = document.createElement("select");
@@ -210,10 +236,10 @@ export default class SimulationForm extends React.Component {
     rangerFightingStylesSelect.setAttribute('style', 'display: none;');
     rangerFightingStyles.split(',').forEach(function(fightingStyle) {
       var option = document.createElement('option');
-      option.setAttribute('value', fightingStyle)
+      option.setAttribute('value', fightingStyle);
 
-      var styleName = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1)
-      option.innerHTML = styleName.replace(/_/g, " ")
+      var styleName = fightingStyle.charAt(0).toUpperCase() + fightingStyle.substring(1);
+      option.innerHTML = styleName.replace(/_/g, " ");
 
       rangerFightingStylesSelect.append(option)
     })
@@ -233,7 +259,9 @@ export default class SimulationForm extends React.Component {
     weapons.split(',').forEach(function(weapon) {
       var option = document.createElement('option');
       option.setAttribute('value', weapon);
-      option.innerHTML = weapon.charAt(0).toUpperCase() + weapon.substring(1);
+
+      var weaponName = weapon.charAt(0).toUpperCase() + weapon.substring(1);
+      option.innerHTML = weaponName.replace(/_/g, " ");
 
       weaponSelect.append(option)
     })
@@ -243,7 +271,9 @@ export default class SimulationForm extends React.Component {
     armours.split(',').forEach(function(armour) {
       var option = document.createElement('option');
       option.setAttribute('value', armour);
-      option.innerHTML = armour.charAt(0).toUpperCase() + armour.substring(1);
+
+      var armourName = armour.charAt(0).toUpperCase() + armour.substring(1);
+      option.innerHTML = armourName.replace(/_/g, " ");
 
       armourSelect.append(option)
     })
@@ -258,7 +288,8 @@ export default class SimulationForm extends React.Component {
         option.innerHTML = "No Off Hand";
       }
       else {
-        option.innerHTML = offHand.charAt(0).toUpperCase() + offHand.substring(1);
+      var offHandName = offHand.charAt(0).toUpperCase() + offHand.substring(1);
+        option.innerHTML = offHandName.replace(/_/g, " ");
       }
 
       offHandSelect.append(option)
@@ -272,6 +303,7 @@ export default class SimulationForm extends React.Component {
 
     newCreatureDiv.append(playerClassSelect)
     newCreatureDiv.append(fighterFightingStylesSelect)
+    newCreatureDiv.append(paladinFightingStylesSelect)
     newCreatureDiv.append(rangerFightingStylesSelect)
     newCreatureDiv.append(levelSelect)
     newCreatureDiv.append(weaponSelect)
@@ -387,20 +419,29 @@ export default class SimulationForm extends React.Component {
                 <option defaultValue value="barbarian">Barbarian</option>
                 <option value="cleric">Cleric</option>
                 <option value="fighter">Fighter</option>
+                <option value="paladin">Paladin</option>
                 <option value="ranger">Ranger</option>
                 <option value="rogue">Rogue</option>
                 <option value="wizard">Wizard</option>
               </select>
               <select id="players-1-fighterfightingstyles" name="players-1-fighterfightingstyles" style={{display: "none"}}>
-                <option defaultValue value="archery">Archery</option>
+                <option defaultValue value="none">None</option>
+                <option value="archery">Archery</option>
                 <option value="defense">Defense</option>
                 <option value="dueling">Dueling</option>
                 <option value="great_weapon_fighting">Great Weapon Fighting</option>
                 <option value="protection">Protection</option>
                 <option value="two_weapon_fighting">Two Weapon Fighting</option>
               </select>
+              <select id="players-1-paladinfightingstyles" name="players-1-paladinfightingstyles" style={{display: "none"}}>
+                <option defaultValue value="none">None</option>
+                <option value="defense">Defense</option>
+                <option value="dueling">Dueling</option>
+                <option value="great_weapon_fighting">Great Weapon Fighting</option>
+              </select>
               <select id="players-1-rangerfightingstyles" name="players-1-rangerfightingstyles" style={{display: "none"}}>
-                <option defaultValue value="archery">Archery</option>
+                <option defaultValue value="none">None</option>
+                <option value="archery">Archery</option>
                 <option value="defense">Defense</option>
                 <option value="dueling">Dueling</option>
                 <option value="two_weapon_fighting">Two Weapon Fighting</option>
@@ -414,18 +455,21 @@ export default class SimulationForm extends React.Component {
               </select>
               <select name="players-1-weapon">
                 <option defaultValue value="shortsword">Shortsword</option>
+                <option value="plus_one_shortsword">Plus one shortsword</option>
                 <option value="greatsword">Greatsword</option>
                 <option value="greataxe">Greataxe</option>
                 <option value="longbow">Longbow</option>
               </select>
               <select name="players-1-armour">
                 <option defaultValue value="noarmour">NoArmour</option>
-                <option value="chainshirt">ChainShirt</option>
+                <option value="chain_shirt">Chain shirt</option>
+                <option value="chain_mail">Chain mail</option>
               </select>
               <select name="players-1-offHand">
                 <option defaultValue value="none">No Off Hand</option>
                 <option value="shield">Shield</option>
                 <option value="shortsword">Shortsword</option>
+                <option value="plus_one_shortsword">Plus one shortsword</option>
               </select>
               <br />
               <input type="text" className="mod-score" placeholder="Str" name="players-1-str" />
