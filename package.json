@@ -6,7 +6,7 @@
   "dependencies": {
     "aws-api-gateway-client": "^0.2.17",
     "aws-sdk": "^2.590.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "gh-pages": "^2.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
